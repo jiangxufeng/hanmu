@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import djcelery
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,8 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '@^+ungygxni$!*t1syw8es=t#$4!n(61+-*qmhdmag4)3!cgw('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
-DEBUG = False
+DEBUG = True
+#DEBUG = False
 
 #ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['127.0.0.1', '206.189.38.127', '.xftx17.top']
@@ -39,8 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'online'
+    'online',
+    'djcelery',
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -123,3 +127,22 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+djcelery.setup_loader()
+BROKER_URL = 'redis://127.0.0.1:6379/6'
+BACKEND_URL = 'redis://127.0.0.1:6379/1'
+CELERY_IMPORTS = ('online.tasks', )
+CELERY_TIMEZONE = TIME_ZONE
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+
+
+
+from celery.schedules import crontab
+
+CELERYBEAT_SCHEDULE = {
+    'HANMU': {
+        "task": "online.tasks.run_u",
+        "schedule": crontab(minute=30, hour=8),
+        "args": ()
+    }
+}
