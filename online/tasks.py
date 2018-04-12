@@ -31,12 +31,11 @@ Version = '2.11'
 
 @task
 def run_u():
-
-    RunDist = str(2000 + random.randint(0, 3))  # meters
-    RunStep = str(random.randint(1300, 1600))
+    IMEI = 'f55ed0d195f94077b42010a470f68de2'
+    RunDist = str(1600 + random.randint(0, 3))  # meters
+    RunStep = str(random.randint(1000, 1300))
     RunTime = str(random.randint(720, 1000))
-    IMEI = '61afed5fef034a4ea88121de723bea68'
-    print('11')
+ #   print('11')
 
     TokenRes = requests.get(
         API_ROOT + '/%7Btoken%7D/QM_Users/Login_AndroidSchool?IMEICode=' + IMEI)
@@ -67,7 +66,7 @@ def run_u():
               'sign': sign, 'version': Version, 'Accept': None, 'User-Agent': None, 'Accept-Encoding': None, 'Connection': 'Keep-Alive'}
 
     # Start Running
-    SRSurl = API_ROOT + '/' + token + '/QM_Runs/SRS?S1=30.534737&S2=114.367785&S3=2000'
+    SRSurl = API_ROOT + '/' + token + '/QM_Runs/SRS?S1=30.534737&S2=114.367785&S3=1600'
     SRSres = requests.get(SRSurl, headers=header, data={})
     SRSjson = json.loads(SRSres.content.decode('utf8', 'ignore'))
 
@@ -106,7 +105,7 @@ def run_u():
     if EndJson['Success']:
         business_id = uuid.uuid1()
         try:
-            send_sms(business_id, '18370548062', "偷懒玩家", 'SMS_130913044', param)
+            send_sms(business_id, '13260628109', "偷懒玩家", 'SMS_130913044', param)
         except:
             return True
 
