@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生活很累，偷偷懒吧</title>
+<script src="{% static 'js/jquery-3.2.1.js' %}"></script>
+<style>form{
+background:white;}
+select{
+
+border: solid 5px #FFF;
+
+ appearance:none;
+-moz-appearance:none;    /*for firefox*/
+-webkit-appearance:none;    /*for chrome*/
+
+padding-right: 10px;
+color:black;
+font-size: 30px;
+
+  width: 200px;
+ height: 50px;
+ overflow: hidden;
+position: absolute;
+left:780px;
+    font-size: 20px;
+
+}
+option{ color:black;}
+
+input{
+    border: solid 5px #FFF;
+  position: absolute;
+ appearance:none;
+-moz-appearance:none;    /*for firefox*/
+-webkit-appearance:none;    /*for chrome*/
+  top:242px;
+left:1000px;
+padding-right: 5px;
+    height:50px;
+width: 80px;
+ overflow: hidden;
+
+}
+
+
+</style>
+</head>
+
+<body>
+<br /><br /><br /><br /><br /><br />
+<h1 align="center"> 生活很累，偷偷懒吧</h1>
+
+
+<br /><br />
+
+<form id="form" action="" method="post" align="center">
+    {% csrf_token %}
+<select name="IMEI" id="choice" >
+<option value="1">1号偷懒玩家</option>
+<option value="2">2号偷懒玩家</option>
+</select>
+
+<input type="button" id="btn" value="开始运动"/>
+</form>
+<br />
+<br />
+<br />
+<br />
+<div id="timer" align="center"></div>
+<div id="dr" align="center"></div>
+<div id="search"align="center"></div>
+
+<script language="javascript" type="text/javascript" >
+    var countdown={{time}} - 1;
+    console.log(countdown);
+    var btn=document.getElementById('btn');
+    var obj = document.getElementById("choice"); //定位id
+    var index = obj.selectedIndex; // 选中索引
+    var value = obj.options[index].value; // 选中值
+    var $loginFrom = $("#form");
+    btn.onclick = function () {
+        a = setInterval(function() {
+        var minutes = parseInt(countdown*1000 / 1000 / 60 % 60, 10);
+        var seconds = parseInt(countdown*1000 / 1000 % 60, 10);
+        if(value==1){
+            uid=253398;
+        document.getElementById("timer").innerHTML = "学姐，偷懒可是不好的噢！";
+        document.getElementById("dr").innerHTML = "还剩："+minutes+"分"+seconds+"秒，请不要关掉页面";}
+        else{
+            uid=248397;
+        document.getElementById("timer").innerHTML = "正在努力偷懒中，还剩："+minutes+"分"+seconds+"秒";
+        document.getElementById("dr").innerHTML = "不要关掉页面哦";
+        ;
+        }
+        countdown--;
+        if(countdown==0){
+            window.clearInterval(a);
+        }
+        },1000);
+        $.ajax({
+            type:"post",
+            url:"/",
+            data:$loginFrom.serialize(),
+            success:function(data){
+                if(data=="1"){
+                   document.getElementById("timer").innerHTML = "今日份已完成！请明日再来！(再次使用请刷新页面)";
+                   document.getElementById("dr").innerHTML = "";
+                   document.getElementById("dr").innerHTML = "<a href=http://sportsapp.aipao.me/Manage/UserDomain_SNSP_Records.aspx/MyResutls?userId=" + uid + ">查一下成绩吧，看看成功没</a>"
+            countdown--;
+                }
+
+                else if(data=="2"){
+                    document.getElementById("timer").innerHTML = "今日份已完成！请明日再来！(再次使用请刷新页面)";
+                }
+                else {
+                    document.getElementById("timer").innerHTML ='出了点问题，跑失败了哦! 请刷新页面重试！';
+                }
+            },
+            error:function(){
+                console.log("shiwu");
+            }
+        });
+
+    }
+
+</script>
+</body>
+</html>
