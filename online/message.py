@@ -5,8 +5,8 @@ import uuid
 
 
 REGION = "cn-hangzhou"
-ACCESS_KEY_ID = "LTAI7Z5sljxhRYsc"
-ACCESS_KEY_SECRET = "F1ZFrtKqhEU1XIPAZGxNsA8vHCDFAW"
+ACCESS_KEY_ID = "*******c"
+ACCESS_KEY_SECRET = "F1ZFr********NsA8vHCDFAW"
 acs_client = AcsClient(ACCESS_KEY_ID, ACCESS_KEY_SECRET, REGION)
 
 
@@ -28,5 +28,5 @@ if __name__ == '__main__':
     __business_id = uuid.uuid1()
     print(__business_id)
     params = "{\"code\":\"874818\",\"prodect\":\"用户注册\"}"
-    print(send_sms(__business_id, "18979837105", "洛斯罗瑞安", "SMS_107095085", params))
+    print(send_sms(__business_id, "********", "洛斯罗瑞安", "SMS_107095085", params))
 
