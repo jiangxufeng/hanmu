@@ -31,7 +31,7 @@ Version = '2.11'
 
 @task
 def run_u():
-    IMEI = 'f55ed0d195f94077b42010a470f68de2'
+    IMEI = '********************'
     RunDist = str(1600 + random.randint(0, 3))  # meters
     RunStep = str(random.randint(1000, 1300))
     RunTime = str(random.randint(720, 1000))
@@ -105,7 +105,7 @@ def run_u():
     if EndJson['Success']:
         business_id = uuid.uuid1()
         try:
-            send_sms(business_id, '13260628109', "偷懒玩家", 'SMS_130913044', param)
+            send_sms(business_id, '*********', "偷懒玩家", 'SMS_130913044', param)
         except:
             return True
 
@@ -129,4 +129,4 @@ def get_late_time(UserId):
 
 
 if __name__ == '__main__':
-    get_late_time(248397)
+    get_late_time(****)
